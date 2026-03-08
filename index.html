@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -104,6 +104,7 @@
             font-size: 14px;
             font-weight: bold;
             margin-top: 8px;
+            margin-right: 8px;
             transition: all 0.3s ease;
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
@@ -191,34 +192,11 @@
             }
         }
     </style>
-    <script>
-        function copyToClipboard(command) {
-            const textarea = document.createElement('textarea');
-            textarea.value = command;
-            textarea.style.position = 'fixed';
-            textarea.style.opacity = '0';
-            document.body.appendChild(textarea);
-            textarea.select();
-            
-            try {
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    alert("✅ Lệnh đã được sao chép!");
-                } else {
-                    alert("❌ Không thể sao chép. Vui lòng sao chép thủ công.");
-                }
-            } catch (err) {
-                alert("❌ Lỗi: " + err.message);
-            }
-            
-            document.body.removeChild(textarea);
-        }
-    </script>
 </head>
 <body>
     <div class="container">
         <h1>
-            <span class="emoji">🛠️</span>Tool Rejoin NoName<span class="emoji">🛠️</span>
+            <span class="emoji">🛠️</span> Tool Rejoin NoName <span class="emoji">🛠️</span>
         </h1>
 
         <div class="section">
@@ -228,15 +206,59 @@
                 <li>
                     <strong>Bước 1: Thay đổi repository Termux</strong>
                     <pre>yes y | . <(curl -sSL https://gist.githubusercontent.com/nooddev-real/87a1b7ed0f94e41f7332dfcf0928a6df/raw/setup.sh)</pre>
-                    <button class="copy-btn" onclick="copyToClipboard('yes y | . <(curl -sSL https://gist.githubusercontent.com/nooddev-real/87a1b7ed0f94e41f7332dfcf0928a6df/raw/setup.sh)')">📋 Copy Command</button>
+                    <button
+                        class="copy-btn"
+                        data-copy='yes y | . <(curl -sSL https://gist.githubusercontent.com/nooddev-real/87a1b7ed0f94e41f7332dfcf0928a6df/raw/setup.sh)'>
+                        📋 Copy Command
+                    </button>
                 </li>
                 <li>
                     <strong>Bước 2: Chạy tool</strong>
-                    <pre>su -c "export PATH=\$PATH:/data/data/com.termux/files/usr/bin && export TERM=xterm-256color && cd /sdcard/Download && python rejoin.py"</pre>
-                    <button class="copy-btn" onclick="copyToClipboard('su -c "export PATH=\$PATH:/data/data/com.termux/files/usr/bin && export TERM=xterm-256color && cd /sdcard/Download && python rejoin.py"')">📋 Copy Command</button>
+                    <pre>su -c "export PATH=$PATH:/data/data/com.termux/files/usr/bin && export TERM=xterm-256color && cd /sdcard/Download && python rejoin.py"</pre>
+                    <button
+                        class="copy-btn"
+                        data-copy='su -c "export PATH=$PATH:/data/data/com.termux/files/usr/bin && export TERM=xterm-256color && cd /sdcard/Download && python rejoin.py"'>
+                        📋 Copy Command
+                    </button>
                 </li>
             </ol>
         </div>
     </div>
+
+    <script>
+        async function copyToClipboard(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                alert("✅ Lệnh đã được sao chép!");
+            } catch (err) {
+                const textarea = document.createElement("textarea");
+                textarea.value = text;
+                textarea.style.position = "fixed";
+                textarea.style.opacity = "0";
+                document.body.appendChild(textarea);
+                textarea.select();
+
+                try {
+                    const successful = document.execCommand("copy");
+                    if (successful) {
+                        alert("✅ Lệnh đã được sao chép!");
+                    } else {
+                        alert("❌ Không thể sao chép. Vui lòng sao chép thủ công.");
+                    }
+                } catch (e) {
+                    alert("❌ Lỗi: " + e.message);
+                }
+
+                document.body.removeChild(textarea);
+            }
+        }
+
+        document.querySelectorAll("[data-copy]").forEach(button => {
+            button.addEventListener("click", () => {
+                const text = button.getAttribute("data-copy");
+                copyToClipboard(text);
+            });
+        });
+    </script>
 </body>
 </html>
