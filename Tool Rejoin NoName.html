@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tool Rejoin NoName</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            line-height: 1.4;
+        }
+
+        h1 small {
+            display: block;
+            font-size: 0.5em;
+            margin-top: 10px;
+            color: #ffeb3b;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #ffeb3b;
+            border-bottom: 3px solid #ffeb3b;
+            padding-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+        }
+
+        ol {
+            list-style-position: inside;
+            line-height: 1.8;
+        }
+
+        ol li {
+            margin-bottom: 20px;
+            padding-left: 10px;
+        }
+
+        ol li strong {
+            color: #ffeb3b;
+            font-size: 1.1em;
+        }
+
+        pre {
+            background: rgba(0,0,0,0.4);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4caf50;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 10px 0;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #ffeb3b 0%, #ffc107 100%);
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            color: #000;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .copy-btn:hover {
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.98);
+        }
+
+        .note {
+            background: rgba(255, 235, 59, 0.15);
+            padding: 20px;
+            border-left: 5px solid #ffeb3b;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .note p {
+            margin-bottom: 10px;
+        }
+
+        .note ul {
+            list-style-position: inside;
+            line-height: 1.8;
+        }
+
+        .note ul li {
+            margin: 8px 0;
+        }
+
+        .note code {
+            background: rgba(0,0,0,0.3);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #ffeb3b;
+        }
+
+        .iframe-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            margin: 20px 0;
+            border: 3px solid rgba(255,255,255,0.2);
+        }
+
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 12px;
+        }
+
+        .emoji {
+            font-size: 1.3em;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5em;
+            }
+
+            h2 {
+                font-size: 1.2em;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            pre {
+                font-size: 12px;
+            }
+        }
+    </style>
+    <script>
+        function copyToClipboard(command) {
+            const textarea = document.createElement('textarea');
+            textarea.value = command;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    alert("✅ Lệnh đã được sao chép!");
+                } else {
+                    alert("❌ Không thể sao chép. Vui lòng sao chép thủ công.");
+                }
+            } catch (err) {
+                alert("❌ Lỗi: " + err.message);
+            }
+            
+            document.body.removeChild(textarea);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            <span class="emoji">🛠️</span>Tool Rejoin NoName<span class="emoji">🛠️</span>
+        </h1>
+
+        <div class="section">
+            <h2>Mục 1: Hướng Dẫn Chạy Tool</h2>
+            <p style="margin-bottom: 20px;">Vui lòng làm theo các bước sau để chạy tool:</p>
+            <ol>
+                <li>
+                    <strong>Bước 1: Thay đổi repository Termux</strong>
+                    <pre>yes y | . <(curl -sSL https://gist.githubusercontent.com/nooddev-real/87a1b7ed0f94e41f7332dfcf0928a6df/raw/setup.sh)</pre>
+                    <button class="copy-btn" onclick="copyToClipboard('yes y | . <(curl -sSL https://gist.githubusercontent.com/nooddev-real/87a1b7ed0f94e41f7332dfcf0928a6df/raw/setup.sh)')">📋 Copy Command</button>
+                </li>
+                <li>
+                    <strong>Bước 2: Chạy tool</strong>
+                    <pre>su -c "export PATH=\$PATH:/data/data/com.termux/files/usr/bin && export TERM=xterm-256color && cd /sdcard/Download && python rejoin.py"</pre>
+                    <button class="copy-btn" onclick="copyToClipboard('su -c "export PATH=\$PATH:/data/data/com.termux/files/usr/bin && export TERM=xterm-256color && cd /sdcard/Download && python rejoin.py"')">📋 Copy Command</button>
+                </li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>
